@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<body>
+    <div class="title" style="width: 100%;">
+        <h1>
+            Nome: {{user.nome}}
+        </h1>
+        <p>
+            Email: {{user.email}}
+        </p>
+        <p>
+            Departamento/Perfil:
+            <select class="srch" style="display: flex;flex-direction: row; margin-bottom: 5px;" id="user_dep" name="user_dep">
+                {%for p in perfis%}
+                    {%if user.dep ==  p.nome%}
+                        <option value="{{p.nome}}" selected>{{p.nome}}</option>
+                    {%else%}
+                        <option value="{{p.nome}}">{{p.nome}}</option>
+                    {%endif%}
+                {%endfor%}
+            </select>
+        </p>
+        
+        <form action="" method="post" id="allow_user">
+            <input type="hidden" id="user_id" name="user_id" value="{{user._id}}">
+            <div class="ch">
+                Usuario permitido:
+            </div>
+            <select class="srch" style="display: flex;flex-direction: row; margin-bottom: 5px;" id="user_blocked" name="user_blocked">
+                {%if user.allow %}
+                    <option value="S" selected>Sim</option>
+                    <option value="N">Não</option>
+                {%else%}
+                    <option value="S">Sim</option>
+                    <option value="N" selected>Não</option>
+                {%endif%}
+            </select>
+            <div class="ch">
+                Usuario administrador:
+            </div>
+            <select class="srch" style="display: flex;flex-direction: row; margin-bottom: 5px;" id="user_adm" name="user_adm">
+                {%if user.admin %}
+                    <option value="S" selected>Sim</option>
+                    <option value="N">Não</option>
+                {%else%}
+                    <option value="S">Sim</option>
+                    <option value="N" selected>Não</option>
+                {%endif%}
+            </select>    
+        </form>
+
+        <script>
+            $("#esc{{user._id}}").click(
+            () => {
+                fetch({{url_for("bp.delete", data="user", id=user._id)|tojson }})
+                    .then(response => response.text())
+                    .then( (text) => {
+                        
+                        $("#root").html(text)
+                    }
+        
+                )
+            }
+        )
+            $("#user_adm").change(
+            () => {
+                fetch({{url_for("bp.make_admin", id=user._id)|tojson }})
+                    .then(response => response.text())
+                    .then( (text) => {
+                        
+                        $("#forms").html(text)
+                    }
+        
+                )
+            }
+        )
+
+            $("#user_dep").change(() => {
+                var dep = $('#user_dep').val()
+
+                fetch({{url_for("bp.set_dep", id=user._id, dep="")|tojson }} + dep)
+                        .then(response => response.text())
+                        .then( (text) => {
+                        console.log(text)
+                    }
+                )
+            })
+        
+        $("#user_blocked").change( () => {
+            
+            // Serialize form data
+            let formData = $("#allow_user").serialize();
+            
+            // Submit the form using AJAX
+            $.ajax({
+                type: "POST",
+                url: "block_users", // Replace with your server endpoint
+                data: formData,
+                success: function(response) {
+                    // Display the result in the 'result' div
+                    console.log(response)
+                    
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        })
+        </script>
+    </div>
+</body>
+</html>     

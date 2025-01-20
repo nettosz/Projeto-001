@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<body>
+    <div class="fade-in-image">
+
+        <h1 class="title">
+        <div class="ch">
+            Mapa - IA
+        </div>
+    </h1>
+    <div class="chamados">
+        <div class="prioridade">
+            <p id="menu-cats">
+                Filtro aplicado - {{nome_filtro}}
+            </p>
+            <div class="pbtns">
+                <div class="text-label">
+                    latitude: {{lat}}&nbsp;&nbsp;
+                </div>
+                <div class="text-label">
+                    longitude: {{long}}&nbsp;&nbsp;
+                </div>
+                
+                <div class="text-label">
+                    tipo de mapa: {{maptype}}&nbsp;&nbsp;
+                </div>
+
+                <div class="text-label">
+                    zoom: {{zoom}}&nbsp;&nbsp;
+                </div>
+            </div>
+            <div style="max-height: 75vh; max-width: 65vw; overflow: auto;">
+                <div class="card card-body" id="eme">
+                    {{ map_html|safe }}
+                </div>
+                <div class="chat-container card">
+                    <div class="chat-messages" id="messages">
+                        
+                    </div>
+                    <div class="input-div default-radius tcad" style="display: flex;">
+                        <form action="" id="input-form">
+                            <input type="text" name="input" id="input" class="input srch">
+                        </form>
+                        <button class="bt-cache btn" id="limpar" style="margin: 0; padding: 5px;"><img style="width: 20px;" src="static/files/icons/plus.svg" alt="Nova conversa"></button>
+                    </div>
+                </div>
+                
+                <div id="map">
+                    
+                </div>
+            </div>
+            
+            <script>
+                $("#input-form").submit(function(e){
+                    e.preventDefault();
+                });
+
+                $("#limpar").click( () => {
+                    fetch({{ url_for("bp.new_conversation")|tojson }})
+                        .then(response => response.text())
+                        .then(text => $("#messages").html(""))
+                })
+                
+                $("#input").keypress((e) => {
+                    
+                    if (e.which == 13){
+
+                        var value = $("#input").val();
+                                $("#messages").html($("#messages").html() + 
+                                `<div class='msg-user chat-message'> <div>${value}</div> </div>`)
+                        
+                        
+                        $("#messages").html($("#messages").html() + 
+                                `<div class='msg-ia chat-message' id="load"> <div style="width: min-content;">
+                                    <div class="filter_bar_loading" id="cache_loading">
+                                        <div class="load_text">
+                                            processando...
+                                        </div>
+                                        <div class="loader"></div>
+                                    </div>
+                                    
+                                    </div> </div>`)
+
+                        $("#cache_loading").show();
+                        let formData = $("#input-form").serialize();
+                        
+                        $("#input").prop( "disabled", true);
+                        $.ajax({
+                            type: "POST",
+                            url: "get_ia_response", // Replace with your server endpoint
+                            data: formData,
+                            success: function(response) {
+                                // Display the result in the 'result' div
+                                $("#load").remove();
+
+                                $("#messages").html($("#messages").html() + 
+                                `<div class='msg-ia chat-message'> <div>${response}</div> </div>`)
+                                
+                                $("#input").prop( "disabled", false);
+                                
+                            },
+                            
+                            error: function(error) {
+                                console.log(error);
+                            }
+                        });
+                    }
+                })
+            </script>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

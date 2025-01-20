@@ -1,0 +1,35 @@
+<div class="usuarios">
+    {%for filtro in filtros%}
+    <div class="card card-body" style="display: flex;justify-content: space-between;flex-direction: row;">
+            <a href="#" id="">
+                <p>
+                    Descrição: {{filtro.nome}}
+                </p>
+            </a>
+            
+            <button id="del-filtro{{filtro._id}}" class="btn">
+                Excluir
+            </button>     
+    </div>
+    <script>
+        $("#del-filtro{{filtro._id}}").click(
+            () => {
+                fetch({{ url_for("bp.del_filtro")|tojson }} + "/{{filtro._id}}")
+                    .then(response => response.text())
+                    .then( () => {
+        
+                        fetch({{ url_for("bp.load_filtros")|tojson }})
+                            .then(response => response.text())
+                            .then(text => {
+                            setTimeout(() => $("#lfiltros").html(text), 200)
+                            })
+                    }
+        
+                )
+            }
+        )
+        
+
+    </script>
+    {%endfor%}
+</div>

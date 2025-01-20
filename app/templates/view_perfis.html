@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<body>
+    <div class="fade-in-image">
+
+        <h1 class="title">
+        <div class="ch">
+            Lista de perfis
+        </div>
+    </h1>
+    <div class="chamados">
+        <div class="prioridade">
+            <p id="menu-cats">
+                Departamentos:
+            </p>
+            <div>
+                <div class="card card-body overflow" id="lperfis">
+                    
+                </div>
+            </div>
+        </div>
+          
+    </div>
+    <script>
+        fetch({{ url_for("bp.load_perfs")|tojson }})
+            .then(response => response.text())
+            .then(text => $("#lperfis").html(text))
+    </script>
+</div>
+</body>
+</html>

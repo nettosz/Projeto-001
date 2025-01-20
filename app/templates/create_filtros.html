@@ -1,0 +1,472 @@
+
+<div style="display:flex; flex-direction:column; padding: 0.3rem; width: 100%;">
+    <style>
+        
+    </style>
+
+    <div style="display: flex;flex-direction: row;justify-content: space-around; padding: 0.2rem;">
+        <h1 class="title">
+            <div class="ch">
+                Filtros
+            </div>
+        </h1>
+    </div>
+    <div style="overflow-y: auto; max-height: 85vh;">
+        <form action="" method="post" id="dados_filtro">
+
+        <div style="display: flex;flex-direction: column; padding: 0.2rem;" class="popup-container tcad default-radius">
+            <div class="ch">
+                Coluna:
+            </div>
+            <div id="myDropdown" class="dropdown-content dropdown show">
+                <input type="text" placeholder="Buscar..." id="myInput" onkeyup="filterFunction()" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <input type="hidden" name="feature" id="feature">
+
+                <div id="dropdown-items" style="overflow: auto;" class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    {% for col in cols_zenith%}
+                        <a id="{{col._id}}" class="dropdown-item" href="#" onmouseenter="add_values('{{col.coluna}}', '{{col.coluna}} -> {{col.desc}}')">{{col.coluna}} -> {{col.desc}}</a>
+                    {%endfor%}
+                </div>
+            </div>
+        
+                <div class="ch">
+                    Conteudo:
+                </div>
+        
+                <input type="text" class="srch" id="conteudo" name="conteudo">
+                
+                <div class="ch">
+                    Seletor de cor:
+                </div>
+        
+                <input type="color" class="srch" id="cor" name="cor" style="height: 1.5rem;">
+                
+                <div class="ch">
+                    Descrição do filtro:
+                </div>
+
+                <input type="text" class="srch" id="nome" name="nome">
+                
+                <div class="ch">
+                    <a class="btn" id="and" style="width: 50%;">E</a>
+                    <a class="btn" id="or"  style="width: 50%;">OU</a>
+                </div>
+
+    
+                <!-- conteudo do filtro -->
+                <input type="hidden" value="" id="filtro" name="filtro">
+
+            </div>
+            
+        <div style="display: flex;flex-direction: row;justify-content: space-around; padding: 0.2rem;">
+            <div class="ch hover" style="color: white;" id="limpar-filtro">
+                Camadas do filtro
+            </div>
+        </div>
+        <div style="display: flex;flex-direction: column; padding: 0.2rem;height: 10rem;" class="popup-container tcad default-radius overflow">
+            <ol class="ch" id="addedf">
+                
+            </ol>
+        </div>
+        
+        <div id="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="ch" style="color: white;">
+                    Adicionar Tooltips
+                </div>
+
+                <div style="flex-direction: row;" class="popup-container tcad default-radius">
+                    <select style="display: flex;flex-direction: row;width: 100%;border-radius: 3px;" id="tooltip" name="tooltip">
+                        <optgroup label="ZENITH">
+                            {%for col in cols_zenith%}
+                            <option value="{{col.coluna}}">{{col.coluna}} -> {{col.desc}}</option>
+                            {%endfor%}
+                        </optgroup>
+                        <optgroup label="PROTHEUS">
+                            {%for col in cols_protheus%}
+                            <option value="{{col.coluna}}">{{col.coluna}} -> {{col.desc}}</option>
+                            {%endfor%}
+                        </optgroup>
+                    </select>
+                    <input type="hidden" name="tooltips_list" id="tooltips_list">
+                </div>
+
+                <div style="display: flex;flex-direction: column; padding: 0.2rem;height: 10rem;margin-bottom: 0.5rem;" class="popup-container tcad default-radius overflow">
+                    <ol class="ch" id="addedt">
+
+                    </ol>
+                </div>
+            
+                <div class="cache_container">
+                    <a href="#" class="closeModal btn" id="close">fechar</a>
+                    <a href="#" class="closeModal btn" id="limpar-tooltip">remover</a>
+                    <a href="#" class="closeModal btn" id="add-tooltip">adicionar</a>
+                </div>
+            
+            </div>
+        </div>
+        <a href="#" id="add-tool" class="btn" style="display: flex;justify-content: center;">Adicionar Tooltip</a>
+        
+
+        <div style="display: flex;flex-direction: row;justify-content: space-around; padding: 0.2rem;">
+            <div class="ch" style="color: white;">
+                Configurações do mapa
+            </div>
+        </div>
+        <div style="display: flex;flex-direction: column; padding: 0.2rem;" class="popup-container tcad default-radius">
+            <div class="ch">
+                latitude:
+            </div>
+            <input type="text" class="srch" id="lat" name="lat" value="0.60794">
+    
+            <div class="ch">
+                longitude:
+            </div>
+            <input type="text" class="srch" id="long" name="long" value="-51.15255">
+    
+            <div class="ch">
+                zoom:
+            </div>
+            <input type="text" class="srch" id="zoom" name="zoom" value="12">
+            
+            <div class="ch">
+                tipo de mapa:
+            </div>
+            
+            <select style="display: flex;flex-direction: row;" id="maptype" name="maptype">
+                <option value="OpenStreetMap" selected>OpenStreetMap</option>
+                <option value="cartodbpositron">Cartodb Positron</option>
+                <option value="Cartodb dark_matter">Cartodb dark_matter</option>
+            </select>
+    
+        </div>
+    </form>
+        <div style="display: flex; align-items: center; flex-direction: row; padding: 0.2rem;" >
+            <button id="add-filtro" class="btn" style="display: flex;justify-content: center; width: 100%;margin: 0.5rem;">
+                Regra
+            </button>
+            <button id="add-camada" class="btn" style="display: flex;justify-content: center; width: 100%;margin: 0.5rem;">
+                Camada
+            </button>
+            <button id="criar-filtro" class="btn" style="display: flex;justify-content: center;width: 100%;margin: 0.5rem;">
+                Filtro
+            </button>
+            
+        </div>
+    </div>
+
+    
+    <script>
+        try {
+            var list_filtros = []
+            var lista_camadas = []
+            var lista_tooltips = []
+        } catch {
+            
+        }
+        
+        function load_cache(last) {
+            $("#reload").prop( "disabled", true);
+            $("#cache_complete").hide();
+            $("#cache_loading").show();
+
+            fetch({{ url_for("bp.cache_filter")|tojson }} + last )
+                        .then(response => response.text())
+                        .then(text => {
+                            
+                        $("#cache_loading").hide();
+                        $("#cache_complete").show();
+                        
+                        $("#reload").prop( "disabled", false );
+                        $("#complete_text").html(`cache completo - ${text} segundos`)
+                    })
+        }
+
+        function createBlock(content, camada) {
+            return `
+                <div class="scratch-block">
+                <div class="block-top">
+                    <span class="block-title">${camada}</span>
+                </div>
+                <div class="block-content overflow">
+                    ${content}
+                </div>
+                </div>
+            `;
+            }
+            
+        function formatFiltersToHtml(data) {
+            let html = `<ul>`;
+
+            // Loop through each filter object
+            for (const filter of data) {
+                if (filter.f && filter.c) {
+                // Use list item with conditional background color
+                html += `<li style="background-color: ${filter.cor}">
+                            ${filter.f} &nbsp;->&nbsp; ${filter.c}
+                        </li>`;
+                } else if (filter === "and" || filter === "or") {
+                // Add separator for logical operators ("and" or "or")
+                html += `<li><b>${filter.toUpperCase()}</b></li>`;
+                }
+            }
+
+            html += `</ul>`;
+            return html;
+            }
+        
+        //Adiciona o condicional and a lista de filtros
+
+        $("#and").click(() => {
+            if (list_filtros[list_filtros.length - 1] !== "and"){
+                list_filtros.push("and")
+            }
+
+            $("#addedf").html(
+                formatFiltersToHtml(list_filtros)
+            )    
+        })
+
+        $("#or").click(() => {
+            if (list_filtros[list_filtros.length - 1] !== "or"){
+                list_filtros.push("or")
+            }
+
+            $("#addedf").html(
+                formatFiltersToHtml(list_filtros)
+            )    
+
+        })
+
+        //Adiciona um filtro a cadeia de filtros
+        $("#add-filtro").click( () => {
+            
+            let fil = {"f" : $("#feature").val(), "c" : $("#conteudo").val(), "cor" : $("#cor").val()}
+
+            if ($("#conteudo").val() && $("#nome").val()) {
+                list_filtros.push(fil)
+
+                $("#addedf").html(
+                    $("#addedf").html() + formatFiltersToHtml([list_filtros.slice(-1)[0]])
+                )    
+            }
+        })
+
+        $("#add-camada").click(
+            () => {
+                if(list_filtros.length > 0) {
+                    lista_camadas.push(list_filtros)
+                    list_filtros = []
+
+                    $("#addedf").html(
+                        () => {
+                            let html = ""
+
+                            for (camada of lista_camadas) {
+                                let nome_item = $("#nome").val()+"-"+crypto.randomUUID().split("-")[0]
+                                
+                                html += createBlock(formatFiltersToHtml(camada), nome_item)
+                                
+                            }
+                            
+                            return html;
+                        }
+                    )
+                }
+            }
+        )
+
+        // Limpda a cadeia de filtros
+        $("#limpar-filtro").click(() => {
+            list_filtros = []
+            lista_camadas = []
+            $("#addedf").html("")
+
+        })
+
+        $("#limpar-tooltip").click(() => {
+            lista_tooltips.pop()
+            update_list_t()
+        })
+
+        //Salva a lista de filtros para criar um novo filtro
+        $("#criar-filtro").click( () => {
+
+            if (!lista_tooltips.length) {
+                alert("Favor adicionar ao menos um Tooltip para criar um filtro!")
+                return 
+            }
+
+            if(!lista_camadas.length) {
+                alert("Favor adicionar ao menos uma camada para criar um filtro!")
+                return 
+            }
+
+            $("#filtro").val(JSON.stringify(lista_camadas))
+            $("#tooltips_list").val(lista_tooltips.toString())
+
+            // Serialize form data
+            let formData = $("#dados_filtro").serialize();
+            
+            // Submit the form using AJAX
+            $.ajax({
+                type: "POST",
+                url: "add_filtro", // Replace with your server endpoint
+                data: formData,
+                success: function(response) {
+                    // Display the result in the 'result' div
+                    console.log(response)
+                    
+                    fetch({{ url_for("bp.load_filtros")|tojson }})
+                    .then(response => response.text())
+                    .then(text => {
+                        setTimeout(() => $("#lfiltros").html(text), 200)
+                    }).then(
+                        () => {
+                            load_cache("last");
+                        }
+                    )
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+
+
+        })
+
+        $("#reload").click(
+            () => {
+                load_cache("");
+            }
+        )
+
+        $("#close").click(() => {
+            $("#modal").hide()
+        })
+
+        $("#add-tool").click(() => {
+            $("#modal").show()
+        })
+
+        function update_list_t() {
+            let list_html = []
+
+            for (const t of lista_tooltips) {
+                list_html.push(
+                    `<li class="btn" id="${t}">
+                    ${t}
+                    </li>
+                    `
+                )
+            }
+            $("#addedt").html(list_html)
+    }
+
+        $("#add-tooltip").click(() => {
+            let value = $("#tooltip").val()
+    
+            if (!lista_tooltips.includes(value)) {
+                lista_tooltips.push($("#tooltip").val())
+                update_list_t()
+            }
+                
+            return false;  
+        })
+        
+        $("#myInput").focusin(() => {
+            $("#dropdown-items").show()
+            $("#myInput").val("")
+        })
+
+        $("#myInput").focusout(() => {
+            $("#dropdown-items").hide()
+        })
+
+        function add_values(col, content) {
+            $("#myInput").val(content)
+            $("#feature").val(col)
+        }
+        
+        function filterFunction() {
+            var input, filter, ul, li, a, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            div = document.getElementById("myDropdown");
+            a = div.getElementsByTagName("a");
+            for (i = 0; i < a.length; i++) {
+                txtValue = a[i].textContent || a[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+                } else {
+                a[i].style.display = "none";
+                }
+            }
+            }
+
+        
+    </script>
+    <style>
+        /* Style the body */
+        body {
+        font-family: sans-serif;
+        margin: 0;
+        }
+
+        /* Style the button that opens the modal */
+        #openModal {
+        padding: 10px 20px;
+        background-color: #333;
+        color: white;
+        border: none;
+        cursor: pointer;
+        }
+
+        /* Style the modal itself */
+        #modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1; /* Make sure the modal sits on top of other content */
+
+        color: white;
+        }
+
+        /* Style the modal content */
+        .modal-content {
+        background-color: rgb(54, 54, 54);
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+
+        width: 50%;
+        }
+
+        /* Style the close button */
+        .closeModal {
+        padding: 5px 10px;
+        border: none;
+        cursor: pointer;
+
+        margin-right: 0.5rem;
+        }
+
+        #addedt {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        #add-tool {
+            margin-top: 0.5rem;
+        }
+
+    </style>
+
+</div>

@@ -1,0 +1,26 @@
+<div class="usuarios">
+    {%for perfil in perfis%}
+    <div class="card card-body hover-opt" id="{{perfil._id}}" style="display: flex;justify-content: space-between;flex-direction: row;">
+            <a href="#" >
+                <p>
+                    &nbsp;{{perfil.nome}}
+                </p>
+            </a>
+    </div>
+    <script>
+        $("#{{perfil._id}}").click(
+            () => {
+                fetch({{ url_for("bp.show_perms")|tojson }} + "/{{perfil._id}}")
+                    .then(response => response.text())
+                    .then( (text) => {
+                        $("#forms").html(text)
+                    }
+        
+                )
+            }
+        )
+        
+
+    </script>
+    {%endfor%}
+</div>

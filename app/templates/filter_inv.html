@@ -1,0 +1,117 @@
+
+<div style="display:flex; flex-direction:column; padding: 0.3rem; width: 100%;">
+    <style>
+        
+    </style>
+
+    <div style="display: flex;flex-direction: row;justify-content: space-around; padding: 0.2rem;">
+        <h1 class="title">
+            <div class="ch">
+                Filtros:
+            </div>
+        </h1>
+    </div>
+    <div style="display: flex;flex-direction: column; padding: 0.2rem;" class="popup-container tcad default-radius">
+        <div class="ch">
+            Nome do filtro:
+        </div>
+        <select style="display: flex;flex-direction: row;" id="filtro_aplicado">
+            {%for filtro in filtros%}
+            <option value="{{filtro._id}}">{{filtro.nome}}</option>
+            {%endfor%}
+        </select>
+        <div style="display: flex;flex-direction: column; padding: 0.2rem;height: 10rem;" class="popup-container tcad default-radius overflow">
+            <ol class="ch" id="addedf">
+                
+            </ol>
+        </div>
+    </div>
+
+    <div style="display: flex; align-items: center; justify-content: space-evenly; flex-direction: row; padding: 0.2rem;" >
+        <div id="aplicar-filtro" class="btn btn-lg btn-outline-secondary hovering shadow-sm ld-over" onclick="running_button()">
+            Aplicar
+            <div class="ld ld-ring ld-cycle"></div>
+        </div>
+    </div>
+
+    
+    <script>
+        var running_button = () => {document.getElementById("aplicar-filtro").classList.add('running');$("#aplicar-filtro").prop( "disabled", true );}
+
+            $("#aplicar-filtro").click(
+                () => {
+                    const update_url = {{ url_for("bp.view_map_inv")|tojson }} + "/"+ $("#filtro_aplicado").val()
+
+                    fetch(update_url)
+                    .then(response => response.text())
+                    .then(text => $("#root").html(text)).then(() => {
+                        $("#aplicar-filtro").removeClass("running");
+                        $("#aplicar-filtro").prop( "disabled", false );
+                    })
+                }
+            )
+
+            function createBlock(content, camada) {
+            return `
+                <div class="scratch-block">
+                <div class="block-top">
+                    <span class="block-title">${camada}</span>
+                </div>
+                <div class="block-content overflow">
+                    ${content}
+                </div>
+                </div>
+            `;
+            }
+
+        function formatFiltersToHtml(data) {
+            let html = `<ul>`;
+
+            // Loop through each filter object
+            for (const filter of data) {
+                if (filter.f && filter.c) {
+                // Use list item with conditional background color
+                html += `<li style="background-color: ${filter.cor}">
+                            ${filter.f} &nbsp;->&nbsp; ${filter.c}
+                        </li>`;
+                } else if (filter === "and" || filter === "or") {
+                // Add separator for logical operators ("and" or "or")
+                html += `<li><b>${filter.toUpperCase()}</b></li>`;
+                }
+            }
+
+            html += `</ul>`;
+            return html;
+            }
+            
+            
+            try{
+                let execute_func = function(){
+                let html_text = ""
+
+                    let filter_url = {{ url_for("bp.show_filter_info")|tojson }} + "/"+ $("#filtro_aplicado").val()
+                        fetch(filter_url)
+                                .then(response => response.text())
+                                .then(text => {
+                                    parsed_text = JSON.parse(text)
+                                    
+                                    for (const f of parsed_text){
+                                        html_text += createBlock(formatFiltersToHtml(f), $("#filtro_aplicado").val())
+                                        
+                                    }
+                                    $("#addedf").html(html_text)
+                                    }
+                                )
+                            }
+
+                
+                            $("#filtro_aplicado").change(
+                                execute_func
+                            )
+            } catch {
+                
+            }
+
+
+    </script>
+</div>

@@ -1,0 +1,34 @@
+<div class="usuarios">
+    {%for dado in dados%}
+    <div class="card card-body overflow" style="display: flex;justify-content: space-between;flex-direction: row;">
+            <a href="#" id="">
+                <p>
+                    {{dado.nome_do_banco}}&nbsp;/&nbsp;{{dado.nome_tabela}}&nbsp;&nbsp;{{dado.coluna}}&nbsp;&nbsp;{{dado.desc}}
+                </p>
+            </a>
+            <button id="del-dado{{dado._id}}" class="btn">
+                Excluir
+            </button>
+    </div>
+    <script>
+        $("#del-dado{{dado._id}}").click(
+            () => {
+                fetch({{ url_for("bp.del_dados")|tojson }} + "/{{dado._id}}")
+                    .then(response => response.text())
+                    .then( () => {
+        
+                        fetch({{ url_for("bp.load_dados")|tojson }})
+                            .then(response => response.text())
+                            .then(text => {
+                            setTimeout(() => $("#ldados").html(text), 200)
+                            })
+                    }
+        
+                )
+            }
+        )
+        
+
+    </script>
+    {%endfor%}
+</div>

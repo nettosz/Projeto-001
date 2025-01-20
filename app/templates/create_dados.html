@@ -1,0 +1,82 @@
+
+<div style="display:flex; flex-direction:column; padding: 0.3rem; width: 100%;">
+    <style>
+        
+    </style>
+
+    <div style="display: flex;flex-direction: row;justify-content: space-around; padding: 0.2rem;">
+        <h1 class="title">
+            <div class="ch">
+                Criar campo
+            </div>
+        </h1>
+    </div>
+    <div style="overflow-y: auto; max-height: 85vh;">
+    <form action="" method="post" id="form_dados">
+
+        <div style="display: flex;flex-direction: column; padding: 0.2rem;" class="popup-container tcad default-radius">
+            
+                <div class="ch">
+                    Nome do banco
+                </div>
+                <select style="display: flex;flex-direction: row;" id="banco" name="banco">
+                    {%for banco in bancos%}
+                        <option value="{{banco}}">{{banco}}</option>
+                    {%endfor%}
+                </select>
+                
+                <div class="ch">
+                    Coluna
+                </div>
+                <input type="text" class="srch" id="coluna" name="coluna">
+                
+                <div class="ch">
+                    Nome da tabela
+                </div>
+                <input type="text" class="srch" id="tabela" name="tabela">
+                
+                <div class="ch">
+                    Descrição
+                </div>
+                <input type="text" class="srch" id="desc" name="desc">
+
+        </div>
+
+    </form>
+        <div style="display: flex; align-items: center; justify-content: space-evenly; flex-direction: row; padding: 0.2rem;" >
+            <button id="add-filtro" class="btn" style="display: flex;justify-content: center;">
+                Adicionar
+            </button>
+        </div>
+    </div>
+    <script>
+
+        //Salva a lista de filtros para criar um novo filtro
+        $("#add-filtro").click( () => {
+            
+            // Serialize form data
+            let formData = $("#form_dados").serialize();
+            
+            // Submit the form using AJAX
+            $.ajax({
+                type: "POST",
+                url: "add_dados", // Replace with your server endpoint
+                data: formData,
+                success: function(response) {
+                    // Display the result in the 'result' div
+                    console.log(response)
+                    
+                    fetch({{ url_for("bp.load_dados")|tojson }})
+                    .then(response => response.text())
+                    .then(text => {
+                        setTimeout(() => $("#ldados").html(text), 200)
+                    })
+                },
+                
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        })
+    </script>
+</div>

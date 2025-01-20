@@ -1,0 +1,106 @@
+
+<div style="display:flex; flex-direction:column; padding: 0.3rem; width: 100%;">
+    <style>
+        
+    </style>
+
+    <div style="display: flex;flex-direction: row;justify-content: space-around; padding: 0.2rem;">
+        <h1 class="title">
+            <div class="ch">
+                Editar permissoes
+            </div>
+        </h1>
+    </div>
+    <div class="ch" id="label-perf">
+        Perfil -> {{perfil.nome}}
+    </div>
+    <div style="overflow-y: auto; max-height: 85vh;">
+    <form action="" method="post" id="form_dados">
+
+        <div style="display: flex;flex-direction: column; padding: 0.2rem;" class="popup-container tcad default-radius">
+                <input type="hidden" name="perf_id" value="{{perfil._id}}">
+
+                <div class="ch">
+                    Criar Dados
+                </div>
+                <select style="display: flex;flex-direction: row;" id="can_create_dados" name="can_create_dados">
+                    {%if perfil.create_dados %}
+                        <option value="S" selected>Sim</option>
+                        <option value="N">Não</option>
+                    {%else%}
+                        <option value="S">Sim</option>
+                        <option value="N" selected>Não</option>
+                    {%endif%}
+
+                </select>
+
+                <div class="ch">
+                    Criar Filtro
+                </div>
+                <select style="display: flex;flex-direction: row;" id="can_create_filter" name="can_create_filter">
+                    {%if perfil.create_filter %}
+                        <option value="S" selected>Sim</option>
+                        <option value="N">Não</option>
+                    {%else%}
+                        <option value="S">Sim</option>
+                        <option value="N" selected>Não</option>
+                    {%endif%}
+                </select>
+
+                <div class="ch">
+                    Editar usuarios
+                </div>
+                <select style="display: flex;flex-direction: row;" id="can_view_users" name="can_view_users">
+                    {%if perfil.view_users %}
+                        <option value="S" selected>Sim</option>
+                        <option value="N">Não</option>
+                    {%else%}
+                        <option value="S">Sim</option>
+                        <option value="N" selected>Não</option>
+                    {%endif%}
+                </select>
+                
+                <div class="ch">
+                    Editar Perfis
+                </div>
+                <select style="display: flex;flex-direction: row;" id="can_view_perfis" name="can_view_perfis">
+                    {%if perfil.view_perfis %}
+                        <option value="S" selected>Sim</option>
+                        <option value="N">Não</option>
+                    {%else%}
+                        <option value="S">Sim</option>
+                        <option value="N" selected>Não</option>
+                    {%endif%}
+                </select>
+        </div>
+
+    </form>
+    </div>
+    <script>
+
+        //Salva a lista de filtros para criar um novo filtro
+        $("#form_dados").change( () => {
+            
+            // Serialize form data
+            let formData = $("#form_dados").serialize();
+            
+            // Submit the form using AJAX
+            $.ajax({
+                type: "POST",
+                url: "set_perms", // Replace with your server endpoint
+                data: formData,
+                success: function(response) {
+                    // Display the result in the 'result' div
+                    console.log(response)
+                    if (!$("#label-perf").html().includes(response))
+                        $("#label-perf").html($("#label-perf").html() + " - " + response)
+                },
+                
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        })
+
+    </script>
+</div>

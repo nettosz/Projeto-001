@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="static/css/chamados.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/loadingio/ldbutton@latest/dist/index.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/loadingio/loading.css@v2.0.0/dist/loading.min.css"/>
+
+
+    <title>App</title>
+</head>
+<body>
+
+    <div class="container-fluid slider rotate">
+        <div class="row" style="flex-wrap: nowrap;">
+            <div class="col-2 block" id="options">
+                
+                <div class="menu" id="menu">
+                    <div id="userlat">
+
+                    </div>
+                    
+                    <a class="nav-item nav-link nav-item-click" id="map_inv" href="#">Mapa</a>
+                    <a class="nav-item nav-link nav-item-click" id="dados" href="#">Dados</a>
+                    <a class="nav-item nav-link nav-item-click" id="perfs" href="#">Perfis</a>
+                    <a class="nav-item nav-link nav-item-click" id="users" href="#">Users</a>
+                    <a class="nav-item nav-link nav-item-click" id="filtros" href="#">Filtros</a>
+
+                    <a class="nav-item nav-link nav-item-click" id="sair" href="/logout">Sair</a>
+                </div>
+            </div>
+            
+            <div class="col block" id="root" style="max-width: 60%;">
+                {%set messages = get_flashed_messages()%}
+                {%if messages%}
+                    {%for msg in messages%}
+                        <div class="alert alert-light">{{msg}}</div>
+                    {%endfor%}
+                {%endif%}
+            </div>
+
+            <div class="col-3 block" id="forms">
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        //On Page Load
+        fetch({{ url_for("bp.view_user_lateral")|tojson }})
+            .then(response => response.text())
+            .then(text => $("#userlat").html(text))
+
+        
+        document.getElementById("map_inv").onclick = function (){
+
+            const update_url = {{ url_for("bp.view_map_inv")|tojson }}
+
+            fetch(update_url)
+            .then(response => response.text())
+            .then(text => $("#root").html(text))
+
+            fetch({{ url_for("bp.filter_inv")|tojson }})
+            .then(response => response.text())
+            .then(text => $("#forms").html(text))
+
+        }
+
+        document.getElementById("dados").onclick = function (){
+            const update_url = {{ url_for("bp.view_dados")|tojson }}
+
+            fetch(update_url)
+            .then(response => response.text())
+            .then(text => $("#root").html(text))
+
+            fetch({{ url_for("bp.create_dados")|tojson }})
+            .then(response => response.text())
+            .then(text => $("#forms").html(text))
+        }
+
+        document.getElementById("users").onclick = function (){
+            const update_url = {{ url_for("bp.view_users")|tojson }}
+
+            fetch(update_url)
+            .then(response => response.text())
+            .then(text => $("#root").html(text))
+
+            fetch({{ url_for("bp.set_dep")|tojson }})
+            .then(response => response.text())
+            .then(text => $("#forms").html(text))
+        }
+
+        document.getElementById("perfs").onclick = function (){
+            const update_url = {{ url_for("bp.view_perfs")|tojson }}
+
+            fetch(update_url)
+            .then(response => response.text())
+            .then(text => $("#root").html(text))
+        
+            fetch({{ url_for("bp.show_perms")|tojson }})
+            .then(response => response.text())
+            .then(text => $("#forms").html(text))
+        }
+
+        document.getElementById("filtros").onclick = function (){
+            const update_url = {{ url_for("bp.view_filtros")|tojson }}
+
+            fetch(update_url)
+            .then(response => response.text())
+            .then(text => $("#root").html(text))
+        
+        
+            fetch({{ url_for("bp.create_filtro")|tojson }})
+            .then(response => response.text())
+            .then(text => $("#forms").html(text))
+        }
+
+    </script>
+
+
+<script>
+    // Add active class to the current button (highlight it)
+    var header = document.getElementById("menu");
+    var btns = header.getElementsByClassName("nav-item-click");
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener("click", function() {
+      var current = document.getElementsByClassName("active");
+      if (current.length > 0) { 
+        current[0].className = current[0].className.replace(" active", "");
+      }
+      this.className += " active";
+      });
+    }
+    </script>
+</body>
+</html>

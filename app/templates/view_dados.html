@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<body>
+    <div class="fade-in-image">
+
+        <h1 class="title">
+        <div class="ch">
+            Definição de campos de dados
+        </div>
+    </h1>
+    <div class="chamados">
+        <div class="prioridade">
+            <p id="menu-cats">
+                NOME DO BANCO / NOME DA TABELA / CAMPO / DESCRIÇÃO
+            </p>
+            <div>
+                <div class="card card-body" id="ldados">
+                    
+                </div>
+            </div>
+        </div>
+          
+    </div>
+    <script>
+        fetch({{ url_for("bp.load_dados")|tojson }})
+            .then(response => response.text())
+            .then(text => $("#ldados").html(text))
+    </script>
+
+</div>
+</body>
+</html>

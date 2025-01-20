@@ -1,0 +1,626 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+}
+a {
+    cursor: default;
+}
+
+.cat:hover {
+    background: #f2f2f2;
+}
+
+p {
+    color: black;
+}
+
+h1, h2, p {
+    margin: 0;
+}
+
+h1 {
+    font-size: 1.5rem;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+}
+
+html, body{
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+}
+
+.title {
+    padding: 0.5rem;
+    color: black;
+}
+
+.pri {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    width: 24.39%;
+}
+
+.cats-btn {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+}
+
+.col-2{
+    display: flex;
+    flex-direction: row;
+    border-right: 1px solid #ffffff;
+}
+
+.col-3 {
+    display: flex;
+    flex-direction: row;
+    border-left: 1px solid #ffffff;
+}
+
+.col-5 {
+    border-right: 1px solid #ffffff;
+}
+
+.btn {
+    background: #e6e6e6;
+    color: black;
+    border: none;
+}
+
+.btn:hover {
+    background: #cccccc;
+}
+
+.nav-item {
+    color: black;
+    background: #e6e6e6;
+    border: none;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+}
+
+.tcad {
+    background: #e6e6e6;
+    color: black;
+    border: none;
+}
+
+.tcad::placeholder {
+    color: black;
+}
+
+.nav-item:hover {
+    background: #cccccc;
+    color: black;
+}
+
+.container-fluid {
+    margin: 1rem;
+}
+
+#userlat {
+    padding: 1rem;
+    background: #e6e6e6;
+    border-radius: 20px;
+}
+
+#userlat:hover div p{
+    color: black;
+}
+.container-fluid {
+    margin: 0;
+    border-radius: 20px;
+    box-shadow: 3px 8px 16px #000000;
+    height: 97vh;
+    width: 98vw;
+    margin: 0px;
+    background-color: #f2f2f2;
+}
+
+.block {
+    padding: 0.6rem;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card a {
+    text-decoration: none;
+    padding: 5px;
+    color: black;
+}
+
+.card {
+    padding: 0.5rem;
+    background: #e6e6e6;
+    border: none;
+    border-radius: 0.1rem;
+    border: 1px solid #a6a6a6;
+}
+
+.chact {
+    text-decoration: none;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 100px;
+    background: #e6e6e6;
+    color: black;
+}
+
+.chact:hover {
+    background: #cccccc;
+    color: black;
+    text-decoration: none;
+}
+
+.file {
+    margin: 8px;
+    padding: 6px 12px;
+    background: #e6e6e6;
+    color: black;
+    border: none;
+}
+
+.row {
+    height: 100%;
+}
+
+.llabel {
+    color: black;
+}
+
+.anexo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px 2rem;
+    margin: 0.5rem 0;
+    border-radius: 100px;
+    background: #e6e6e6;
+}
+
+.anexo a {
+    color: black;
+}
+
+#add {
+    margin: 0.5rem;
+}
+
+.cat {
+    padding: 0.3rem;
+    border: 1px solid gray;
+    border-radius: 10px;
+    margin: 2px;
+}
+
+.em {
+    background: #ff3333;
+    width: 5px;
+    padding: 0.3rem;
+    border-radius: 20px;
+}
+
+.u {
+    width: 5px;
+    padding: 0.3rem;
+    border-radius: 20px;
+    background: #ffb84d;
+}
+
+.pu {
+    background: #b3ff66;
+    width: 5px;
+    padding: 0.3rem;
+    border-radius: 20px;
+}
+
+.nu {
+    background: #80bfff;
+    width: 5px;
+    padding: 0.3rem;
+    border-radius: 20px;
+}
+
+.null {
+    background: white;
+    width: 5px;
+    padding: 0.3rem;
+    border-radius: 20px;
+}
+
+.overflow {
+    max-height: 75vh;
+    overflow-y: overlay;
+}
+
+.chamados {
+    max-height: 85vh;
+    overflow: hidden;
+}
+
+.att {
+    margin: 0px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.fade-in-image {
+    white-space: nowrap;
+    overflow: hidden;
+    animation: fadeIn 0.3s ease-in; 
+}
+
+@keyframes fadeIn {
+    0% { 
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0%);
+    }
+}
+
+.slider {
+    white-space: nowrap;
+    overflow: hidden;
+    animation: slide 1s;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+.srch {
+    color: black;
+    background-color: #ffffff;
+    border-radius: 5px;
+    border: none;
+    width: 99%;
+    height: 99%;
+}
+
+.bset {
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    margin: 5px;
+}
+
+.bset:hover {
+    filter: brightness(0.4);
+}
+
+.prior {
+    display: flex;
+    justify-content: space-between;
+}
+
+.pbtns {
+    display: flex;
+    flex-direction: row;
+}
+
+.overflow-new {
+    max-height: 87vh;
+    overflow-y: overlay;
+}
+
+.bem {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: #ff3333;
+    border-radius: 50%; /* Makes it a circle */
+    margin-right: 5px; /* Adjust as needed for spacing */
+}
+
+.bu {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: #ffb84d;
+    border-radius: 50%; /* Makes it a circle */
+    margin-right: 5px; /* Adjust as needed for spacing */
+}
+
+.bpu {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: #b3ff66;
+    border-radius: 50%; /* Makes it a circle */
+    margin-right: 5px; /* Adjust as needed for spacing */
+}
+
+.bnu {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: #80bfff;
+    border-radius: 50%; /* Makes it a circle */
+    margin-right: 5px; /* Adjust as needed for spacing */
+}
+
+.active {
+    background: #f2f2f2;
+    color: black;
+}
+
+.active-pri {
+    padding-bottom: 1rem;
+    margin-bottom: 0;
+    background: #e6e6e6;
+    border-top-left-radius: 0.25rem; /* Adjust the value as needed */
+    border-top-right-radius: 0.25rem; /* Adjust the value as needed */
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.ch {
+    color: black;
+}
+
+.text-label {
+    color: black;
+}
+
+.default-radius {
+    border-radius: 5px;
+}
+
+.hover{
+    padding: 0.3rem;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.hover:hover {
+    background: #cccccc;
+}
+
+.scratch-block {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #999; /* Dark border color */
+    border-radius: 4px;
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #f2f2f2; /* Dark background color */
+}
+
+.block-top {
+    background-color: #999; /* Darker top section */
+    padding: 5px;
+    border-bottom: 1px solid #bbb; /* Slightly lighter border bottom */
+}
+
+.block-title {
+    font-weight: bold;
+    color: black; /* Light text color for better contrast */
+}
+
+.block-content {
+    padding: 10px;
+    color: black; /* Light text
+    color for content */
+}
+
+input {
+    text-transform: uppercase;
+}
+
+.loader {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 6px solid black;
+
+    transform: translate(-50%, -50%);
+    animation: rotate 1.5s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loader::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border-top: 6px solid #2ECC71; /* Green color */
+    animation: dash 1.5s linear infinite;
+}
+
+@keyframes dash {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.filter_bar_loading {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.load_text {
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bt-cache {
+    margin: 0.5rem;
+}
+
+.cache_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* The search field */
+#myInput {
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    color: black;
+    background-color: #ffffff;
+    border-radius: 5px;
+    border: none;
+    width: 99%;
+    border-radius: 5px;
+}
+
+/* The search field when it gets focus/clicked on */
+#myInput:focus {
+    outline: 3px solid #ddd;
+}
+
+#dropdown-items {
+    display: none;
+    width: 99%;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    z-index: 100;
+    border-radius: 5px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 3px 3px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {
+    display: block;
+}
+
+.input-div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 5px;
+}
+
+.chat-container {
+    width: 100%;
+    display: flex;
+}
+
+.chat-messages {
+    color: black;
+}
+
+.msg {
+    color: black;
+    margin: 5px;
+    overflow-x: auto;
+}
+
+#input-form {
+    width: 100%;
+}
+
+.input {
+    padding-left: 1rem;
+}
+
+table {
+    color: black;
+}
+
+img {
+    width: -webkit-fill-available;
+}
+
+.msg-ia {
+    padding: 1rem;
+    -webkit-border-radius: 50px;
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-radius: 50px;
+    -moz-border-radius-bottomright: 0;
+    border-radius: 50px;
+    border-bottom-right-radius: 0;
+
+    background-color: #f2f2f2;
+    color: black;
+}
+
+.msg-user {
+    -webkit-border-radius: 50px;
+    -webkit-border-bottom-left-radius: 0;
+    -moz-border-radius: 50px;
+    -moz-border-radius-bottomleft: 0;
+    border-radius: 50px;
+    border-bottom-left-radius: 0;
+
+    background-color: black;
+    color: white;
+
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 1rem;
+}
+
+.chat-message {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.chat-message div {
+    text-wrap: pretty;
+}
+
+.hover-opt:hover {
+    background-color: #cccccc;
+}

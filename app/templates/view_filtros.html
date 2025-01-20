@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<body>
+    <div class="fade-in-image">
+
+        <h1 class="title">
+        <div class="ch">
+            Definição de filtros
+        </div>
+    </h1>
+    <div class="chamados">
+        <div class="prioridade">
+            <div class="cache_container">
+                <p id="menu-cats">
+                    Lista de filtros
+                </p>
+                <button class="btn bt-cache" id="reload">
+                    reload
+                </button>
+                <div class="filter_bar_loading" id="cache_loading" style="display: none;">
+                    <div class="load_text">
+                        construindo cache
+                    </div>
+                    <div class="loader"></div>
+        
+                </div>
+                <div id="cache_complete">
+                    <div class="load_text" id="complete_text">
+                        cache completo
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="card card-body overflow" id="lfiltros">
+                    
+                </div>
+            </div>
+        </div>
+          
+    </div>
+    <script>
+        fetch({{ url_for("bp.load_filtros")|tojson }})
+            .then(response => response.text())
+            .then(text => $("#lfiltros").html(text))
+            
+    </script>
+
+</div>
+</body>
+</html>
